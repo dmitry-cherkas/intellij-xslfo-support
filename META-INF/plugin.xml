@@ -2,7 +2,7 @@
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
     <version>1.0</version>
-    <vendor email="cherkas.da@gmail.com" url="">Dmitry Cherkas</vendor>
+    <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support">Dmitry Cherkas</vendor>
 
     <description><![CDATA[
       This plugin provides run configuration that allows execution of XSL-FO transformations with Apache FOP.
