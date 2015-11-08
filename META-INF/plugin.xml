@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support">Dmitry Cherkas</vendor>
 
     <description><![CDATA[
@@ -9,6 +9,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <p>1.0.1
+        <ul>
+            <li>Specified plugin compatibility with IntelliJ Platform products</li>
+        </ul>
+    </p>
     <p>1.0
         <ul>
             <li>Implemented XSL-FO run configuration with Apache FOP</li>
@@ -20,6 +25,7 @@
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="131"/>
 
+    <depends>com.intellij.modules.lang</depends>
     <depends>XPathView</depends>
     <depends>com.intellij.modules.xml</depends>
 
