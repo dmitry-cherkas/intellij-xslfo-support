@@ -3,7 +3,6 @@ package org.intellij.lang.xslfo.run.editor;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
@@ -11,7 +10,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
-
 import org.intellij.lang.xslfo.run.XslFoRunConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +18,7 @@ import javax.swing.*;
 /**
  * @author Dmitry_Cherkas
  */
-public class XslFoSettingsEditor extends SettingsEditor<XslFoRunConfiguration> {
+public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfiguration> {
 
     private final Project myProject;
 
@@ -30,21 +28,12 @@ public class XslFoSettingsEditor extends SettingsEditor<XslFoRunConfiguration> {
     private TextFieldWithBrowseButton myOutputFile;
     private JCheckBox myOpenOutputFile;
     private JCheckBox myOpenInBrowser;
-    private TextFieldWithBrowseButton myFopInstallationDir;
-    private TextFieldWithBrowseButton myUserConfigLocation;
 
-    public XslFoSettingsEditor(Project project) {
+    public XslFoRunConfigurationEditor(Project project) {
         this.myProject = project;
 
         myOutputFile.addBrowseFolderListener("Choose Output File", "The selected file will be overwritten during execution.",
                                              myProject, FileChooserDescriptorFactory.createSingleFileOrFolderDescriptor());
-
-        myFopInstallationDir.addBrowseFolderListener("Choose FOP Installation Directory",
-                                                     "FOP installation directory should contain fop shell scripts (fop.bat,fop.cmd, etc).",
-                                                     myProject, FileChooserDescriptorFactory.createSingleFolderDescriptor());
-
-        myUserConfigLocation.addBrowseFolderListener("Choose User Configuration File", "Optional userconfig.xml file may be selected.",
-                                                     myProject, FileChooserDescriptorFactory.createSingleFileDescriptor(StdFileTypes.XML));
     }
 
     private void createUIComponents() {
@@ -61,16 +50,6 @@ public class XslFoSettingsEditor extends SettingsEditor<XslFoRunConfiguration> {
         myOutputFile.setText(s.getOutputFile());
         myOpenOutputFile.setSelected(s.isOpenOutputFile());
         myOpenInBrowser.setSelected(s.isOpenInBrowser());
-
-        VirtualFile fopInstallationDir = s.getFopInstallationDir();
-        if (fopInstallationDir != null) {
-            myFopInstallationDir.setText(fopInstallationDir.getPath());
-        }
-
-        VirtualFile fopUserConfig = s.getFopUserConfig();
-        if (fopUserConfig != null) {
-            myUserConfigLocation.setText(fopUserConfig.getPath());
-        }
 
         FileChooserDescriptor xmlDescriptor = myXmlInputFile.getDescriptor();
 
@@ -94,8 +73,6 @@ public class XslFoSettingsEditor extends SettingsEditor<XslFoRunConfiguration> {
         s.setOutputFile(myOutputFile.getText());
         s.setOpenOutputFile(myOpenOutputFile.isSelected());
         s.setOpenInBrowser(myOpenInBrowser.isSelected());
-        s.setFopInstallationDir(myFopInstallationDir.getText());
-        s.setFopUserConfig(myUserConfigLocation.getText());
     }
 
     @NotNull

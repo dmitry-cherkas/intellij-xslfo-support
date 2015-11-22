@@ -4,11 +4,7 @@ import com.intellij.execution.CantRunException;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.CommandLineState;
 import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.execution.process.ProcessAdapter;
-import com.intellij.execution.process.ProcessEvent;
-import com.intellij.execution.process.ProcessHandler;
-import com.intellij.execution.process.ProcessTerminatedListener;
+import com.intellij.execution.process.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.application.ApplicationManager;
@@ -16,20 +12,20 @@ import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-
 import org.apache.commons.lang.StringUtils;
+import org.intellij.lang.xslfo.XslFoSettings;
+import org.intellij.lang.xslfo.XslFoUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.io.File;
 import java.nio.charset.Charset;
-
-import javax.swing.*;
 
 /**
  * @author Dmitry_Cherkas
  */
 public class XslFoCommandLineState extends CommandLineState {
-
+    private final XslFoSettings mySettings = XslFoSettings.getInstance();
     private final XslFoRunConfiguration myXslFoRunConfiguration;
 
     public XslFoCommandLineState(XslFoRunConfiguration xslFoRunConfiguration,
@@ -96,13 +92,13 @@ public class XslFoCommandLineState extends CommandLineState {
 
     protected GeneralCommandLine buildCommandLine() throws ExecutionException {
         GeneralCommandLine commandLine = new GeneralCommandLine();
-        VirtualFile fopExecutablePath = myXslFoRunConfiguration.getFopExecutablePath();
+        VirtualFile fopExecutablePath = XslFoUtils.findFopExecutable(mySettings.getFopInstallationDir());
         if (fopExecutablePath == null) {
             throw new CantRunException("Invalid FOP installation directory");
         }
         commandLine.setExePath(fopExecutablePath.getPath());
 
-        VirtualFile fopUserConfig = myXslFoRunConfiguration.getFopUserConfig();
+        VirtualFile fopUserConfig = XslFoUtils.findFopUserConfig(mySettings.getUserConfigLocation());
         if (fopUserConfig != null) {
             commandLine.addParameters("-c", fopUserConfig.getPath());
         }
