@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support">Dmitry Cherkas</vendor>
 
     <description><![CDATA[
@@ -9,6 +9,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <p>1.1.1
+        <ul>
+            <li>https://github.com/dmitry-cherkas/intellij-xslfo-support/issues/1</li>
+        </ul>
+    </p>
     <p>1.1
         <ul>
             <li>moved FOP configuration to application-level settings</li>

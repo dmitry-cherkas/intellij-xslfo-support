@@ -12,8 +12,11 @@ import java.io.File;
  */
 public class XslFoUtils {
 
-    public static VirtualFile findFopExecutable(String pathTofopInstallationDir) {
-        String url = VfsUtilCore.pathToUrl(pathTofopInstallationDir).replace(File.separatorChar, '/');
+    public static VirtualFile findFopExecutable(String pathToFopInstallationDir) {
+        if(pathToFopInstallationDir == null) {
+            return null;
+        }
+        String url = VfsUtilCore.pathToUrl(pathToFopInstallationDir).replace(File.separatorChar, '/');
         VirtualFile fopInstallationDir = VirtualFileManager.getInstance().findFileByUrl(url);
         if (fopInstallationDir == null) {
             return null;
