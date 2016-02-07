@@ -10,7 +10,6 @@ import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.runners.ExecutionEnvironment;
-import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.vfs.VfsUtilCore;
@@ -23,6 +22,7 @@ import org.intellij.lang.xslfo.XslFoUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.swing.*;
@@ -34,12 +34,21 @@ public class XslFoCommandLineState extends CommandLineState {
 
     private final XslFoSettings mySettings = XslFoSettings.getInstance();
     private final XslFoRunConfiguration myXslFoRunConfiguration;
+    private final File temporaryFile;
 
-    public XslFoCommandLineState(XslFoRunConfiguration xslFoRunConfiguration,
-                                 ExecutionEnvironment environment) {
+    public XslFoCommandLineState(XslFoRunConfiguration xslFoRunConfiguration, ExecutionEnvironment environment) {
         super(environment);
 
         this.myXslFoRunConfiguration = xslFoRunConfiguration;
+        if (myXslFoRunConfiguration.isUseTemporaryFiles()) {
+            try {
+                temporaryFile = File.createTempFile("fo_", ".pdf");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            temporaryFile = null;
+        }
     }
 
     @NotNull
@@ -54,9 +63,9 @@ public class XslFoCommandLineState extends CommandLineState {
             }
         };
         ProcessTerminatedListener.attach(processHandler);
-        final org.intellij.lang.xslfo.run.XsltRunConfigurationBase runConfiguration = myXslFoRunConfiguration;
+        final XslFoRunConfiguration runConfiguration = myXslFoRunConfiguration;
         processHandler.addProcessListener(new ProcessAdapter() {
-            private final XsltRunConfigurationBase myXsltRunConfiguration = runConfiguration;
+            private final XslFoRunConfiguration myXsltRunConfiguration = runConfiguration;
 
             @Override
             public void processTerminated(final ProcessEvent event) {
@@ -68,11 +77,8 @@ public class XslFoCommandLineState extends CommandLineState {
                             @Override
                             public void run() {
                                 if (event.getExitCode() == 0) {
-                                    if (myXsltRunConfiguration.isOpenInBrowser()) {
-                                        BrowserUtil.browse(myXsltRunConfiguration.getOutputFile());
-                                    }
                                     if (myXsltRunConfiguration.isOpenOutputFile()) {
-                                        final String url = VfsUtilCore.pathToUrl(myXsltRunConfiguration.getOutputFile());
+                                        final String url = VfsUtilCore.pathToUrl(getOutputFilePath());
                                         final VirtualFile fileByUrl = VirtualFileManager
                                                 .getInstance().refreshAndFindFileByUrl(url.replace(File.separatorChar, '/'));
                                         if (fileByUrl != null) {
@@ -124,7 +130,11 @@ public class XslFoCommandLineState extends CommandLineState {
         commandLine.addParameter("-pdf");
 
         // OUT FILE
-        commandLine.addParameter(myXslFoRunConfiguration.getOutputFile());
+        commandLine.addParameter(getOutputFilePath());
         return commandLine;
+    }
+
+    private String getOutputFilePath() {
+        return (temporaryFile != null) ? temporaryFile.getAbsolutePath() : myXslFoRunConfiguration.getOutputFile();
     }
 }

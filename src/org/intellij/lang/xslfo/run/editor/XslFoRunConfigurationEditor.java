@@ -10,8 +10,12 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
+
 import org.intellij.lang.xslfo.run.XslFoRunConfiguration;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -27,13 +31,20 @@ public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfigur
     private JPanel myComponent;
     private TextFieldWithBrowseButton myOutputFile;
     private JCheckBox myOpenOutputFile;
-    private JCheckBox myOpenInBrowser;
+    private JCheckBox myUseTemporaryFiles;
 
     public XslFoRunConfigurationEditor(Project project) {
         this.myProject = project;
 
         myOutputFile.addBrowseFolderListener("Choose Output File", "The selected file will be overwritten during execution.",
                                              myProject, FileChooserDescriptorFactory.createSingleFileOrFolderDescriptor());
+        myUseTemporaryFiles.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateComponentsState();
+            }
+        });
+        updateComponentsState();
     }
 
     private void createUIComponents() {
@@ -49,7 +60,7 @@ public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfigur
         myXmlInputFile.getComboBox().setSelectedItem(s.getXmlInputFile());
         myOutputFile.setText(s.getOutputFile());
         myOpenOutputFile.setSelected(s.isOpenOutputFile());
-        myOpenInBrowser.setSelected(s.isOpenInBrowser());
+        myUseTemporaryFiles.setSelected(s.isUseTemporaryFiles());
 
         FileChooserDescriptor xmlDescriptor = myXmlInputFile.getDescriptor();
 
@@ -58,12 +69,9 @@ public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfigur
             final Module contextModule = ProjectRootManager.getInstance(s.getProject()).getFileIndex().getModuleForFile(xmlInputFile);
             if (contextModule != null) {
                 xmlDescriptor.putUserData(LangDataKeys.MODULE_CONTEXT, contextModule);
-            } else {
-                xmlDescriptor.putUserData(LangDataKeys.MODULE_CONTEXT, s.getModule());
             }
-        } else {
-            xmlDescriptor.putUserData(LangDataKeys.MODULE_CONTEXT, s.getModule());
         }
+        updateComponentsState();
     }
 
     @Override
@@ -72,12 +80,21 @@ public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfigur
         s.setXmlInputFile(myXmlInputFile.getXmlInputFile());
         s.setOutputFile(myOutputFile.getText());
         s.setOpenOutputFile(myOpenOutputFile.isSelected());
-        s.setOpenInBrowser(myOpenInBrowser.isSelected());
+        s.setUseTemporaryFiles(myUseTemporaryFiles.isSelected());
     }
 
     @NotNull
     @Override
     protected JComponent createEditor() {
         return myComponent;
+    }
+
+    private void updateComponentsState() {
+        myOutputFile.setEnabled(!myUseTemporaryFiles.isSelected());
+        myOpenOutputFile.setEnabled(!myUseTemporaryFiles.isSelected());
+
+        if (myUseTemporaryFiles.isSelected()) {
+            myOpenOutputFile.setSelected(true);
+        }
     }
 }

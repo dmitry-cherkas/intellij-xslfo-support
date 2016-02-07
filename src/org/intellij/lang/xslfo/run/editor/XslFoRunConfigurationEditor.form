@@ -65,7 +65,7 @@
         <children>
           <component id="317eb" class="javax.swing.JLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Save &amp;to File:"/>
@@ -74,24 +74,25 @@
           </component>
           <component id="7ee49" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="myOutputFile">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
           <component id="8e4d4" class="javax.swing.JCheckBox" binding="myOpenOutputFile">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="&amp;Open file in editor after execution"/>
-            </properties>
-          </component>
-          <component id="929cc" class="javax.swing.JCheckBox" binding="myOpenInBrowser">
-            <constraints>
               <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Open file in web &amp;browser after execution"/>
+              <selected value="true"/>
+              <text value="&amp;Open saved file after execution"/>
+            </properties>
+          </component>
+          <component id="5502a" class="javax.swing.JCheckBox" binding="myUseTemporaryFiles">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Use temporary file to save generated document"/>
             </properties>
           </component>
         </children>

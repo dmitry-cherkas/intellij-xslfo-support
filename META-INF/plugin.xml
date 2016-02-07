@@ -17,6 +17,7 @@
             <li>Added context menu action to create FOP Run configuration for selected file</li>
             <li>"Make" action is no longer added by default to newly created configurations</li>
             <li>Fixed validation of "Save to file" field in configuration editor</li>
+            <li>Added "Use temporary file.." option to run configuration</li>
         </ul>
     </p>
     <p>1.1.1
