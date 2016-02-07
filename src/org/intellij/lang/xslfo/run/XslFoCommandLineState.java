@@ -4,7 +4,11 @@ import com.intellij.execution.CantRunException;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.CommandLineState;
 import com.intellij.execution.configurations.GeneralCommandLine;
-import com.intellij.execution.process.*;
+import com.intellij.execution.process.OSProcessHandler;
+import com.intellij.execution.process.ProcessAdapter;
+import com.intellij.execution.process.ProcessEvent;
+import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.application.ApplicationManager;
@@ -12,19 +16,22 @@ import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
+
 import org.apache.commons.lang.StringUtils;
 import org.intellij.lang.xslfo.XslFoSettings;
 import org.intellij.lang.xslfo.XslFoUtils;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.io.File;
 import java.nio.charset.Charset;
+
+import javax.swing.*;
 
 /**
  * @author Dmitry_Cherkas
  */
 public class XslFoCommandLineState extends CommandLineState {
+
     private final XslFoSettings mySettings = XslFoSettings.getInstance();
     private final XslFoRunConfiguration myXslFoRunConfiguration;
 
@@ -54,36 +61,34 @@ public class XslFoCommandLineState extends CommandLineState {
             @Override
             public void processTerminated(final ProcessEvent event) {
 
-                if (myXsltRunConfiguration.isSaveToFile()) {
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            Runnable runnable = new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (event.getExitCode() == 0) {
-                                        if (myXsltRunConfiguration.isOpenInBrowser()) {
-                                            BrowserUtil.browse(myXsltRunConfiguration.getOutputFile());
-                                        }
-                                        if (myXsltRunConfiguration.isOpenOutputFile()) {
-                                            final String url = VfsUtilCore.pathToUrl(myXsltRunConfiguration.getOutputFile());
-                                            final VirtualFile fileByUrl = VirtualFileManager
-                                                    .getInstance().refreshAndFindFileByUrl(url.replace(File.separatorChar, '/'));
-                                            if (fileByUrl != null) {
-                                                fileByUrl.refresh(false, false);
-                                                new OpenFileDescriptor(myXsltRunConfiguration.getProject(), fileByUrl).navigate(true);
-                                                return;
-                                            }
-                                        }
-                                        VirtualFileManager.getInstance().asyncRefresh(null);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                if (event.getExitCode() == 0) {
+                                    if (myXsltRunConfiguration.isOpenInBrowser()) {
+                                        BrowserUtil.browse(myXsltRunConfiguration.getOutputFile());
                                     }
+                                    if (myXsltRunConfiguration.isOpenOutputFile()) {
+                                        final String url = VfsUtilCore.pathToUrl(myXsltRunConfiguration.getOutputFile());
+                                        final VirtualFile fileByUrl = VirtualFileManager
+                                                .getInstance().refreshAndFindFileByUrl(url.replace(File.separatorChar, '/'));
+                                        if (fileByUrl != null) {
+                                            fileByUrl.refresh(false, false);
+                                            new OpenFileDescriptor(myXsltRunConfiguration.getProject(), fileByUrl).navigate(true);
+                                            return;
+                                        }
+                                    }
+                                    VirtualFileManager.getInstance().asyncRefresh(null);
                                 }
-                            };
-                            ApplicationManager.getApplication().runWriteAction(runnable);
-                        }
-                    };
-                    SwingUtilities.invokeLater(runnable);
-                }
+                            }
+                        };
+                        ApplicationManager.getApplication().runWriteAction(runnable);
+                    }
+                };
+                SwingUtilities.invokeLater(runnable);
             }
         });
 

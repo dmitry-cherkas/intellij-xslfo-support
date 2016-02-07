@@ -7,7 +7,7 @@ import com.intellij.execution.configurations.ConfigurationTypeUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-import icons.XpathIcons;
+import icons.XslFoIcons;
 
 import javax.swing.*;
 
@@ -38,7 +38,7 @@ public class XslFoRunConfigType implements ConfigurationType {
     }
 
     public Icon getIcon() {
-        return XpathIcons.Xslt;
+        return XslFoIcons.FopLogo;
     }
 
     public ConfigurationFactory[] getConfigurationFactories() {

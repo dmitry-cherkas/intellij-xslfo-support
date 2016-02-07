@@ -1,14 +1,24 @@
 <idea-plugin version="2">
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
-    <version>1.1.1</version>
-    <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support">Dmitry Cherkas</vendor>
+    <version>1.2</version>
+    <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support" logo="/icons/fop-logo-32x32.png">
+        Dmitry Cherkas
+    </vendor>
 
     <description><![CDATA[
       This plugin provides run configuration that allows execution of XSL-FO transformations with Apache FOP.
     ]]></description>
 
     <change-notes><![CDATA[
+    <p>1.2
+        <ul>
+            <li>Changed logo for FOP run configurations</li>
+            <li>Added context menu action to create FOP Run configuration for selected file</li>
+            <li>"Make" action is no longer added by default to newly created configurations</li>
+            <li>Fixed validation of "Save to file" field in configuration editor</li>
+        </ul>
+    </p>
     <p>1.1.1
         <ul>
             <li>https://github.com/dmitry-cherkas/intellij-xslfo-support/issues/1</li>
@@ -46,6 +56,8 @@
                                  instance="org.intellij.lang.xslfo.XslFoConfigurable"/>
         <applicationService serviceInterface="org.intellij.lang.xslfo.XslFoSettings"
                             serviceImplementation="org.intellij.lang.xslfo.XslFoSettings"/>
+
+        <runConfigurationProducer implementation="org.intellij.lang.xslfo.run.XslFoConfigurationProducer"/>
     </extensions>
 
 </idea-plugin>

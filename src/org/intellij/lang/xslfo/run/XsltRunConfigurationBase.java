@@ -31,10 +31,9 @@ import java.io.File;
 public abstract class XsltRunConfigurationBase extends LocatableConfigurationBase
         implements ModuleRunConfiguration, RunConfigurationWithSuppressedDefaultDebugAction {
 
-    private String myOutputFile; // intentionally untracked. should it be?
+    private String myOutputFile;
     private boolean myOpenOutputFile;
     private boolean myOpenInBrowser;
-    private boolean mySaveToFile = false;
 
     @Nullable
     private VirtualFilePointer myXsltFile = null;
@@ -62,16 +61,14 @@ public abstract class XsltRunConfigurationBase extends LocatableConfigurationBas
             throw new RuntimeConfigurationError("Selected XML Input File not found");
         }
 
-        if (mySaveToFile) {
-            if (StringUtils.isEmpty(getOutputFile())) {
-                throw new RuntimeConfigurationError("No output file selected");
-            }
-            final File f = new File(getOutputFile());
-            if (f.isDirectory()) {
-                throw new RuntimeConfigurationError("Selected output file points to a directory");
-            } else if (f.exists() && !f.canWrite()) {
-                throw new RuntimeConfigurationError("Selected output file is not writable");
-            }
+        if (StringUtils.isEmpty(getOutputFile())) {
+            throw new RuntimeConfigurationError("No output file selected");
+        }
+        final File f = new File(getOutputFile());
+        if (f.isDirectory()) {
+            throw new RuntimeConfigurationError("Selected output file points to a directory");
+        } else if (f.exists() && !f.canWrite()) {
+            throw new RuntimeConfigurationError("Selected output file is not writable");
         }
     }
 
@@ -202,14 +199,6 @@ public abstract class XsltRunConfigurationBase extends LocatableConfigurationBas
     @Nullable
     public VirtualFile findXmlInputFile() {
         return myXmlInputFile != null ? myXmlInputFile.getFile() : null;
-    }
-
-    public boolean isSaveToFile() {
-        return mySaveToFile;
-    }
-
-    public void setSaveToFile(boolean saveToFile) {
-        mySaveToFile = saveToFile;
     }
 
     public boolean isOpenOutputFile() {
