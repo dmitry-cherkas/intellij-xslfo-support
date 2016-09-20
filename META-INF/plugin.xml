@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
-    <version>1.2</version>
+    <version>1.2.1</version>
     <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support" logo="/icons/fop-logo-32x32.png">
         Dmitry Cherkas
     </vendor>
@@ -11,6 +11,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <p>1.2.1
+        <ul>
+            <li>Fixed #3: userconfig.xml is now truly optional</li>
+        </ul>
+    </p>
     <p>1.2
         <ul>
             <li>Changed logo for FOP run configurations</li>

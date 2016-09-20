@@ -5,6 +5,8 @@ import com.intellij.openapi.vfs.VfsUtilCore;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
 
 /**
@@ -32,6 +34,9 @@ public class XslFoUtils {
     }
 
     public static VirtualFile findFopUserConfig(String userConfigLocation) {
+        if(StringUtils.isEmpty(userConfigLocation)) {
+            return null;
+        }
         String url = VfsUtilCore.pathToUrl(userConfigLocation).replace(File.separatorChar, '/');
         return VirtualFileManager.getInstance().findFileByUrl(url);
     }
