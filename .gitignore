@@ -57,4 +57,7 @@ out
 .idea/
 *.iml
 
+#Gradle build output
+build/
+
 .DS_Store
