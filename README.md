@@ -1,4 +1,4 @@
-#XSL-FO Support for IntelliJ IDEA
+#XSL-FO Support for IntelliJ IDEA [![Build Status](https://travis-ci.org/dmitry-cherkas/intellij-xslfo-support.svg?branch=master)](https://travis-ci.org/dmitry-cherkas/intellij-xslfo-support)
 
 This plugin provides run configuration that allows execution of XSL-FO transformations with [Apache FOP](https://xmlgraphics.apache.org/fop/) (Formatting Objects Processor).
 
