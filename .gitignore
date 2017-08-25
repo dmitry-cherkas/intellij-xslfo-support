@@ -59,5 +59,6 @@ out
 
 #Gradle build output
 build/
+!gradle-wrapper.jar
 
 .DS_Store
