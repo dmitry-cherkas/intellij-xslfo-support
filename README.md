@@ -9,3 +9,15 @@ The plugin can be installed within IntelliJ IDEA or by downloading the plugin fr
 Simply run the runIde task using the gradle wrapper:
 
 `./gradlew runIde`
+
+## Using the plugin:
+
+Download the FOP binary from [here](http://mirrors.ukfast.co.uk/sites/ftp.apache.org/xmlgraphics/fop/binaries/) and extract it somewhere on your system. Then configure the plugin to point to the root of the extracted directory.
+
+Settings > Languages & Frameworks > XSL-FO
+
+![XSL-FO Settings](screenshots/xsl-fo-settings.png)
+
+The plugin allows for a new XSL-FO run configuration
+
+![XSL-FO Settings](screenshots/xsl-fo-runconfig.png)
