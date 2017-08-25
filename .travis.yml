@@ -26,10 +26,20 @@ jobs:
       script: skip
       env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
       deploy:
-        provider: script
-        skip_cleanup: true
-        script: ./gradlew publishPlugin
-        on:
-          branch: release
+        - provider: script
+          script: ./gradlew publishPlugin
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: dmitry-cherkas/intellij-xslfo-support
+        - provider: releases
+          api_key:
+            secure: vlHGAepa7ndUImkJAdbm6QvlGf8Dat7zz6XI3BEAz4ge9IEwwvzCuluPzf5S9IjyNdSRF0KnDYHRkzRCORDTlW1UB1OLG+kyLEIoS9t201sUMWSeQA1n3osjnFkSnfY7nQuIiZbxQbIWwq4q8sL+lxaCaZMP7p5XmwYwpcC7Zj9dQx7s1DBrFlu9qMpQcnDgFa5RhSlQOwKgRgrDkEM2hdRGvN3R1f61wSBkIQlUTqGp5dxCetJSTzxlWN1s4qZSZEoUUhdiuzM6utS8Y9MyeWxR2MxnXusKVdVyecK4posqA3nKZ8vXOrgT6WdRhH4EpZ2o9UHmrDZcNKWgeqz+PtdF/lVX4NE0hHmBVHp008kN/Otr1gxFNDSpcs7rQtq5639nZdJppgQRmNf3fd53n/dlM4dXmuqfguwlsLMPAvjGSrTz9X7wUDU2Zrr8eWpeyhT5Lq7ydQAtSiM67fhX0UVda/9kCWV3W3aurttRhQtuaUDZjMcGy53+l+vRBqrOTvdbhPTPVZKFaLLe6aoWDQaSLni3XZMacwA9TIZUWnHm2glFTA90b0/1Omn+VMBKRBa6r5v1qcRrGUs8Nu3vXSX85+vmeyq8jRYugZB5Hmx4pt0IlIIOkfeqgBce4I8+wlzMIiRZnbRxl+oJkwiyvKCS8Bw0urKiVRy24dvAY+8=
+          file_glob: true
+          file: "build/distributions/*"
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: dmitry-cherkas/intellij-xslfo-support
   allow_failures:
     - env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
