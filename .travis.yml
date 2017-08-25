@@ -1,0 +1,33 @@
+language: java
+
+jdk: oraclejdk8
+
+dist: trusty
+
+env:
+  global:
+  - ORG_GRADLE_PROJECT_downloadIdeaSources=false
+
+jobs:
+  include:
+    - stage: Build and Test
+      env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.1
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.4
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.3
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.2
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.1
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1
+    - stage: Deploy new Release
+      script: skip
+      env: ORG_GRADLE_PROJECT_ideaVersion=2017.1
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: ./gradlew publishPlugin
+        on:
+          branch: release
+  allow_failures:
+    - env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
