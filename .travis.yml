@@ -8,6 +8,14 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
 jobs:
   include:
     - stage: Build and Test
