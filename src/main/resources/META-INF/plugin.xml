@@ -1,7 +1,9 @@
-<idea-plugin version="2">
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
     <id>XslFoSupport</id>
     <name>XSL-FO Support for IntelliJ IDEA</name>
-    <version>1.2.1</version>
+    <version>@version@</version>
+
     <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support" logo="/icons/fop-logo-32x32.png">
         Dmitry Cherkas
     </vendor>
@@ -11,6 +13,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <p>1.3.0
+        <ul>
+            <li>Updated to support IntelliJ 2017.1.* - 2017.2</li>
+        </ul>
+    </p>
     <p>1.2.1
         <ul>
             <li>Fixed #3: userconfig.xml is now truly optional</li>
@@ -49,7 +56,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="131.0"/>
+    <idea-version since-build="171" until-build="172.*"/>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>XPathView</depends>
