@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @State(
         name = "XslFoSettings",
-        storages = @Storage(file = StoragePathMacros.APP_CONFIG + "/other.xml")
+        storages = @Storage("other.xml")
 )
 public class XslFoSettings implements PersistentStateComponent<XslFoSettings> {
 
