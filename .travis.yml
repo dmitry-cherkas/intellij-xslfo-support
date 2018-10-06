@@ -11,6 +11,7 @@ env:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -20,11 +21,11 @@ jobs:
   include:
     - stage: Build and Test
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2018.2.4
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2018.1.5
     - stage: Deploy new Release
       script: skip
-      env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
+      env: ORG_GRADLE_PROJECT_ideaVersion=2018.1
       deploy:
         - provider: script
           script: ./gradlew publishPlugin
