@@ -55,11 +55,6 @@ public final class XslFoRunConfiguration extends LocatableConfigurationBase impl
         super(project, factory, NAME);
     }
 
-    public boolean isCompileBeforeLaunchAddedByDefault() {
-        // TODO: remove this method when support fo 2018 is dropped, as it's not coming from superclass anymore thus is not used
-        return false;
-    }
-
     @Override
     public boolean excludeCompileBeforeLaunchOption() {
         return true;

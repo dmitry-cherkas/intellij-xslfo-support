@@ -2,13 +2,14 @@ package org.intellij.lang.xslfo.run;
 
 import com.intellij.execution.Location;
 import com.intellij.execution.actions.ConfigurationContext;
-import com.intellij.execution.actions.RunConfigurationProducer;
+import com.intellij.execution.actions.LazyRunConfigurationProducer;
+import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.openapi.util.Ref;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
-
 import org.intellij.lang.xpath.xslt.XsltSupport;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -17,14 +18,10 @@ import java.io.File;
  *
  * @author Dmitry_Cherkas
  */
-public class XslFoConfigurationProducer extends RunConfigurationProducer<XslFoRunConfiguration> {
-
-    protected XslFoConfigurationProducer() {
-        super(XslFoRunConfigType.getInstance());
-    }
+public class XslFoConfigurationProducer extends LazyRunConfigurationProducer<XslFoRunConfiguration> {
 
     @Override
-    protected boolean setupConfigurationFromContext(XslFoRunConfiguration configuration, ConfigurationContext context, Ref<PsiElement> source) {
+    protected boolean setupConfigurationFromContext(@NotNull XslFoRunConfiguration configuration, @NotNull ConfigurationContext context, Ref<PsiElement> source) {
         final XmlFile file = PsiTreeUtil.getParentOfType(source.get(), XmlFile.class, false);
         if (file != null && file.isPhysical() && XsltSupport.isXsltFile(file)) {
             source.set(file); // update reference
@@ -35,7 +32,7 @@ public class XslFoConfigurationProducer extends RunConfigurationProducer<XslFoRu
     }
 
     @Override
-    public boolean isConfigurationFromContext(XslFoRunConfiguration configuration, ConfigurationContext context) {
+    public boolean isConfigurationFromContext(@NotNull XslFoRunConfiguration configuration, ConfigurationContext context) {
         Location location = context.getLocation();
         if (location == null) {
             return false;
@@ -45,5 +42,11 @@ public class XslFoConfigurationProducer extends RunConfigurationProducer<XslFoRu
                && contextFile.isPhysical()
                && XsltSupport.isXsltFile(contextFile)
                && contextFile.getVirtualFile().getPath().replace('/', File.separatorChar).equals(configuration.getXsltFile());
+    }
+
+    @NotNull
+    @Override
+    public ConfigurationFactory getConfigurationFactory() {
+        return XslFoRunConfigType.getInstance().getConfigurationFactories()[0];
     }
 }

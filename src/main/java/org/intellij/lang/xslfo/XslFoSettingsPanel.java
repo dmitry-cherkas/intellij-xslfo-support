@@ -31,7 +31,7 @@ public class XslFoSettingsPanel {
                 null, FileChooserDescriptorFactory.createSingleFileDescriptor(StdFileTypes.XML));
 
         // configure Settings Validation
-        myWarningLabel.setIcon(AllIcons.RunConfigurations.ConfigurationWarning);
+        myWarningLabel.setIcon(AllIcons.General.BalloonError);
         MySettingsPanelChangeListener changeListener = new MySettingsPanelChangeListener();
 
         myFopInstallationDir.getTextField().getDocument().addDocumentListener(changeListener);
