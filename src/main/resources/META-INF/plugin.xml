@@ -1,7 +1,7 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin>
     <id>XslFoSupport</id>
-    <name>XSL-FO Support for IntelliJ IDEA</name>
+    <name>XSL-FO Support</name>
     <version>@version@</version>
 
     <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support" logo="/icons/fop-logo-32x32.png">
