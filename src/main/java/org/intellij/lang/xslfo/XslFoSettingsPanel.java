@@ -1,8 +1,8 @@
 package org.intellij.lang.xslfo;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class XslFoSettingsPanel {
                 null, FileChooserDescriptorFactory.createSingleFolderDescriptor());
 
         myUserConfigLocation.addBrowseFolderListener("Choose User Configuration File", "Optional userconfig.xml file may be selected.",
-                null, FileChooserDescriptorFactory.createSingleFileDescriptor(StdFileTypes.XML));
+                null, FileChooserDescriptorFactory.createSingleFileDescriptor(XmlFileType.INSTANCE));
 
         // configure Settings Validation
         myWarningLabel.setIcon(AllIcons.General.BalloonError);

@@ -57,7 +57,7 @@ public class XslFoRunConfigurationEditor extends SettingsEditor<XslFoRunConfigur
     @Override
     protected void resetEditorFrom(XslFoRunConfiguration s) {
         myXsltFile.setText(s.getXsltFile());
-        myXmlInputFile.getComboBox().setSelectedItem(s.getXmlInputFile());
+        myXmlInputFile.getChildComponent().setSelectedItem(s.getXmlInputFile());
         myOutputFile.setText(s.getOutputFile());
         myOpenOutputFile.setSelected(s.isOpenOutputFile());
         myUseTemporaryFiles.setSelected(s.isUseTemporaryFiles());

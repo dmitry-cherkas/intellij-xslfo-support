@@ -2,13 +2,7 @@ package org.intellij.lang.xslfo.run;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.configurations.LocatableConfigurationBase;
-import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.execution.configurations.RunConfigurationWithSuppressedDefaultDebugAction;
-import com.intellij.execution.configurations.RunProfileState;
-import com.intellij.execution.configurations.RuntimeConfigurationError;
-import com.intellij.execution.configurations.RuntimeConfigurationException;
+import com.intellij.execution.configurations.*;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
@@ -36,7 +30,8 @@ import java.io.File;
 /**
  * @author Dmitry_Cherkas
  */
-public final class XslFoRunConfiguration extends LocatableConfigurationBase implements RunConfigurationWithSuppressedDefaultDebugAction {
+public final class XslFoRunConfiguration extends LocatableConfigurationBase
+    implements RunConfigurationWithSuppressedDefaultDebugAction, RunProfileWithCompileBeforeLaunchOption {
 
     private static final String NAME = "XSL-FO Configuration";
 
@@ -56,7 +51,7 @@ public final class XslFoRunConfiguration extends LocatableConfigurationBase impl
     }
 
     @Override
-    public boolean excludeCompileBeforeLaunchOption() {
+    public boolean isExcludeCompileBeforeLaunchOption() {
         return true;
     }
 

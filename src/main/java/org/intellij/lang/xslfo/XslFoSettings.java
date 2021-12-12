@@ -1,7 +1,9 @@
 package org.intellij.lang.xslfo;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -40,11 +42,11 @@ public class XslFoSettings implements PersistentStateComponent<XslFoSettings> {
     }
 
     @Override
-    public void loadState(XslFoSettings state) {
+    public void loadState(@NotNull XslFoSettings state) {
         XmlSerializerUtil.copyBean(state, this);
     }
 
     public static XslFoSettings getInstance() {
-        return ServiceManager.getService(XslFoSettings.class);
+        return ApplicationManager.getApplication().getService(XslFoSettings.class);
     }
 }

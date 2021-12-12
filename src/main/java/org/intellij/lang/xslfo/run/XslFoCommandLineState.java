@@ -82,8 +82,9 @@ public class XslFoCommandLineState extends CommandLineState {
                                         final VirtualFile fileByUrl = VirtualFileManager
                                                 .getInstance().refreshAndFindFileByUrl(url.replace(File.separatorChar, '/'));
                                         if (fileByUrl != null) {
-                                            fileByUrl.refresh(false, false);
-                                            new OpenFileDescriptor(myXsltRunConfiguration.getProject(), fileByUrl).navigate(true);
+                                            fileByUrl.refresh(true, false, () -> {
+                                                new OpenFileDescriptor(myXsltRunConfiguration.getProject(), fileByUrl).navigate(true);
+                                            });
                                             return;
                                         }
                                     }
