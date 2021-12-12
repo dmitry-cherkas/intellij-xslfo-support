@@ -1,46 +1,27 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
-    }
-}
-
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.16'
+    id 'org.jetbrains.intellij' version '0.7.3'
 }
 
-version = "${version}"
+repositories {
+    mavenCentral()
+}
 
-allprojects {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+apply plugin: 'java'
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
 
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-        options.compilerArgs << "-Xlint:deprecation"
-    }
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:deprecation"
+}
 
-    // take the version number defined in 'gradle.properties' and use that in plugin.xml
-    task initConfig(type: Copy) {
-        from('src/main/resources') {
-            include '**/plugin.xml'
-            filter(ReplaceTokens, tokens: [version: version])
-        }
-    }
-
-    apply plugin: 'org.jetbrains.intellij'
-    intellij {
-        pluginName 'intellij-xslfo-support'
-        version ideaVersion
-        updateSinceUntilBuild false
-        plugins 'xpath' // the XPathView plugin is in a directory simply named xpath in Intellij IC and IU
-
-        // SET YOUR JETBRAINS LOGIN DETAILS AS ENVIRONMENT VARIABLES SO THAT YOU CAN PUBLISH A NEW BUILD TO THE REPOSITORY
-        publishPlugin {
-            token System.getenv('MARKETPLACE_TOKEN')
-        }
+// take the version number defined in 'gradle.properties' and use that in plugin.xml
+task initConfig(type: Copy) {
+    from('src/main/resources') {
+        include '**/plugin.xml'
+        filter(ReplaceTokens, tokens: [version: version])
     }
 }
 
@@ -51,3 +32,18 @@ idea {
         languageLevel = javaVersion
     }
 }
+
+apply plugin: 'org.jetbrains.intellij'
+intellij {
+    pluginName 'intellij-xslfo-support'
+    version ideaVersion
+    updateSinceUntilBuild false
+    plugins 'xpath' // the XPathView plugin is in a directory simply named xpath in Intellij IC and IU
+
+    // SET YOUR JETBRAINS LOGIN DETAILS AS ENVIRONMENT VARIABLES SO THAT YOU CAN PUBLISH A NEW BUILD TO THE REPOSITORY
+    publishPlugin {
+        token System.getenv('MARKETPLACE_TOKEN')
+    }
+}
+
+version = "${version}"
