@@ -1,6 +1,7 @@
 package org.intellij.lang.xslfo.run.editor;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import com.intellij.openapi.vfs.VirtualFile;
 
@@ -21,7 +22,7 @@ class ProjectDefaultAccessor implements TextComponentAccessor<JTextField> {
 
     public String getText(JTextField component) {
         final String text = component.getText();
-        final VirtualFile baseDir = project.getBaseDir();
+        final VirtualFile baseDir = ProjectUtil.guessProjectDir(project);
         return text.length() > 0 ? text : (baseDir != null ? baseDir.getPresentableUrl() : "");
     }
 
