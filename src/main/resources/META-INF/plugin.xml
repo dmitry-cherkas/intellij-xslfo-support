@@ -66,7 +66,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="192"/>
+    <idea-version since-build="201"/>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>XPathView</depends>
@@ -77,9 +77,7 @@
 
         <applicationConfigurable displayName="XSL-FO" groupId="language" id="settings.xslfo"
                                  instance="org.intellij.lang.xslfo.XslFoConfigurable"/>
-        <applicationService serviceInterface="org.intellij.lang.xslfo.XslFoSettings"
-                            serviceImplementation="org.intellij.lang.xslfo.XslFoSettings"/>
-
+        <applicationService serviceImplementation="org.intellij.lang.xslfo.XslFoSettings"/>
         <runConfigurationProducer implementation="org.intellij.lang.xslfo.run.XslFoConfigurationProducer"/>
     </extensions>
 
