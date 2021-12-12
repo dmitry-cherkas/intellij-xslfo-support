@@ -15,8 +15,17 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        include:
+          - ideaVersion: LATEST-EAP-SNAPSHOT
+            experimental: true
+          - ideaVersion: 2021.3
+            experimental: false
+          - ideaVersion: 2021.2
+            experimental: false
 
     steps:
     - uses: actions/checkout@v2
@@ -26,6 +35,8 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
+      uses: gradle/gradle-build-action@v2.0.1
+      env:
+        ORG_GRADLE_PROJECT_ideaVersion: ${{ matrix.ideaVersion }}
       with:
         arguments: buildPlugin
