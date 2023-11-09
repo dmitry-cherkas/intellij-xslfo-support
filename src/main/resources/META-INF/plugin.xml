@@ -4,7 +4,7 @@
     <name>XSL-FO Support</name>
     <version>@version@</version>
 
-    <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support" logo="/icons/fop-logo-32x32.png">
+    <vendor email="cherkas.da@gmail.com" url="https://github.com/dmitry-cherkas/intellij-xslfo-support">
         Dmitry Cherkas
     </vendor>
 
@@ -66,7 +66,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="201"/>
+    <idea-version since-build="222" />
 
     <depends>com.intellij.modules.lang</depends>
     <depends>XPathView</depends>
