@@ -30,7 +30,7 @@ import java.io.File;
 /**
  * @author Dmitry_Cherkas
  */
-public final class XslFoRunConfiguration extends LocatableConfigurationBase
+public final class XslFoRunConfiguration extends LocatableConfigurationBase<XslFoRunConfiguration>
     implements RunConfigurationWithSuppressedDefaultDebugAction, RunProfileWithCompileBeforeLaunchOption {
 
     private static final String NAME = "XSL-FO Configuration";
@@ -106,7 +106,7 @@ public final class XslFoRunConfiguration extends LocatableConfigurationBase
 
     @Override
     @SuppressWarnings({"unchecked"})
-    public void readExternal(Element element) throws InvalidDataException {
+    public void readExternal(@NotNull Element element) throws InvalidDataException {
         super.readExternal(element);
 
         Element e = element.getChild("XsltFile");
@@ -133,7 +133,7 @@ public final class XslFoRunConfiguration extends LocatableConfigurationBase
     }
 
     @Override
-    public void writeExternal(Element element) throws WriteExternalException {
+    public void writeExternal(@NotNull Element element) throws WriteExternalException {
         super.writeExternal(element);
 
         Element e = new Element("XsltFile");
